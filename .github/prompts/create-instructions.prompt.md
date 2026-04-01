@@ -1,6 +1,5 @@
 ---
 name: create-instructions
-description: Describe when to use this prompt
 agent: instructions Generator
 ---
 

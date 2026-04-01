@@ -144,18 +144,8 @@ drizzle.config.ts     # Drizzle Kit configuration
 
 ---
 
-## Documentation References
-
-> **CRITICAL — MANDATORY STEP**: Before writing ANY code, you MUST read the relevant `/docs` file(s) listed below in full using a file-reading tool. Do not rely on memory, assumptions, or prior context. Skipping this step is not permitted under any circumstances.
-
-- **Authentication**: See [`docs/authentication.md`](docs/authentication.md) for all Clerk auth rules, protected routes, and modal sign-in/sign-up requirements.
-- **UI Components**: See [`docs/ui-components.md`](docs/ui-components.md) for shadcn/ui standards — all UI must use shadcn/ui; no custom components.
-
----
-
 ## What Agents Must NOT Do
 
-- **ALWAYS read the relevant `/docs` instruction file(s) in full BEFORE generating any code — no exceptions.** If the task touches authentication, read `docs/authentication.md`. If it touches UI, read `docs/ui-components.md`. When in doubt, read both.
 - Do not install new dependencies without explicit user approval.
 - Do not modify `drizzle.config.ts`, `next.config.ts`, or `tsconfig.json` unless the task explicitly requires it.
 - Do not delete or overwrite `db/schema.ts` — only append or modify table definitions.

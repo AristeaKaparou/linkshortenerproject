@@ -3,6 +3,9 @@ import { redirect } from "next/navigation";
 import { getUserLinks } from "@/data/links";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Link2, ExternalLink } from "lucide-react";
+import { CreateLinkDialog } from "@/components/CreateLinkDialog";
+import { EditLinkDialog } from "@/components/EditLinkDialog";
+import { DeleteLinkDialog } from "@/components/DeleteLinkDialog";
 
 export default async function DashboardPage() {
   const { userId } = await auth();
@@ -12,9 +15,12 @@ export default async function DashboardPage() {
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-10">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">Your Links</h1>
-        <p className="mt-1 text-muted-foreground">Manage and track all your shortened URLs.</p>
+      <div className="mb-8 flex items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Your Links</h1>
+          <p className="mt-1 text-muted-foreground">Manage and track all your shortened URLs.</p>
+        </div>
+        <CreateLinkDialog />
       </div>
 
       {userLinks.length === 0 ? (
@@ -38,15 +44,19 @@ export default async function DashboardPage() {
                       <Link2 className="size-4 shrink-0 text-primary" />
                       <span className="text-primary">/{link.shortCode}</span>
                     </CardTitle>
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      <ExternalLink className="size-3" />
-                      Visit
-                    </a>
+                    <div className="flex items-center gap-1">
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors px-2 py-1"
+                      >
+                        <ExternalLink className="size-3" />
+                        Visit
+                      </a>
+                      <EditLinkDialog link={link} />
+                      <DeleteLinkDialog link={link} />
+                    </div>
                   </div>
                   <CardDescription className="truncate">{link.url}</CardDescription>
                 </CardHeader>
