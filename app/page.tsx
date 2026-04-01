@@ -178,12 +178,12 @@ export default async function Home() {
             Free forever. No credit card required.
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <SignUpButton mode="modal">
+            <SignUpButton mode="modal" forceRedirectUrl="/dashboard">
               <Button size="lg" className="gap-2">
                 Create free account <ArrowRight className="size-4" />
               </Button>
             </SignUpButton>
-            <SignInButton mode="modal">
+            <SignInButton mode="modal" forceRedirectUrl="/dashboard">
               <Button size="lg" variant="outline">
                 Already have an account? Sign in
               </Button>
