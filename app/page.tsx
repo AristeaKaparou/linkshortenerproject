@@ -18,7 +18,7 @@ export default async function Home() {
           Fast, free URL shortening
         </div>
         <h1 className="max-w-3xl text-5xl font-bold tracking-tight text-foreground sm:text-6xl">
-          Shorten URLs. Track Clicks.{" "}
+          Shorten URLs.{" "}
           <span className="text-primary/80">Own Your Links.</span>
         </h1>
         <p className="max-w-xl text-lg text-muted-foreground leading-relaxed">
