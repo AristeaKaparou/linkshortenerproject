@@ -1,17 +1,17 @@
-import { redirect, notFound } from "next/navigation";
-import { getLinkByShortCode } from "@/data/links";
+import { redirect, notFound } from "next/navigation"
+import { getLinkByShortCode } from "@/data/links"
 
 interface RouteParams {
-  params: Promise<{ shortCode: string }>;
+  params: Promise<{ shortCode: string }>
 }
 
 export async function GET(_request: Request, { params }: RouteParams) {
-  const { shortCode } = await params;
-  const link = await getLinkByShortCode(shortCode);
+  const { shortCode } = await params
+  const link = await getLinkByShortCode(shortCode)
 
   if (!link) {
-    notFound();
+    notFound()
   }
 
-  redirect(link.url);
+  redirect(link.url)
 }

@@ -1,13 +1,26 @@
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import { SignInButton, SignUpButton } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Link2, BarChart3, LayoutDashboard, Copy, Zap, Shield, ArrowRight } from "lucide-react";
+import { auth } from "@clerk/nextjs/server"
+import { redirect } from "next/navigation"
+import { SignInButton, SignUpButton } from "@clerk/nextjs"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card"
+import {
+  Link2,
+  BarChart3,
+  LayoutDashboard,
+  Copy,
+  Zap,
+  Shield,
+  ArrowRight,
+} from "lucide-react"
 
 export default async function Home() {
-  const { userId } = await auth();
-  if (userId) redirect("/dashboard");
+  const { userId } = await auth()
+  if (userId) redirect("/dashboard")
 
   return (
     <div className="flex flex-col flex-1">
@@ -18,8 +31,7 @@ export default async function Home() {
           Fast, free URL shortening
         </div>
         <h1 className="max-w-3xl text-5xl font-bold tracking-tight text-foreground sm:text-6xl">
-          Shorten URLs.{" "}
-          <span className="text-primary/80">Own Your Links.</span>
+          Shorten URLs. <span className="text-primary/80">Own Your Links.</span>
         </h1>
         <p className="max-w-xl text-lg text-muted-foreground leading-relaxed">
           Transform long, unwieldy URLs into clean short links in seconds. Get
@@ -119,8 +131,8 @@ export default async function Home() {
                 </div>
                 <CardTitle>Secure & Reliable</CardTitle>
                 <CardDescription>
-                  Every link is tied to your authenticated account. Only you
-                  can manage and delete your links.
+                  Every link is tied to your authenticated account. Only you can
+                  manage and delete your links.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -192,7 +204,5 @@ export default async function Home() {
         </div>
       </section>
     </div>
-  );
+  )
 }
-
-

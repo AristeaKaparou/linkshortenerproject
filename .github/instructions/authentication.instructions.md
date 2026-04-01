@@ -43,16 +43,16 @@ All authentication in this project is handled exclusively by **Clerk** (`@clerk/
 ## Server-Side Auth Pattern
 
 ```ts
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server"
+import { redirect } from "next/navigation"
 
 // Protect a route
-const { userId } = await auth();
-if (!userId) redirect("/");
+const { userId } = await auth()
+if (!userId) redirect("/")
 
 // Redirect authenticated users away from homepage
-const { userId } = await auth();
-if (userId) redirect("/dashboard");
+const { userId } = await auth()
+if (userId) redirect("/dashboard")
 ```
 
 ## Client-Side Auth Hooks
@@ -60,6 +60,6 @@ if (userId) redirect("/dashboard");
 Use `useAuth()` or `useUser()` from `@clerk/nextjs` for client components that need auth state.
 
 ```ts
-import { useAuth } from "@clerk/nextjs";
-const { isSignedIn, userId } = useAuth();
+import { useAuth } from "@clerk/nextjs"
+const { isSignedIn, userId } = useAuth()
 ```

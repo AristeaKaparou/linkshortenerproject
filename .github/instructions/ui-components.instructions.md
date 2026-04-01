@@ -1,6 +1,8 @@
 ---
 description: Read this file before implementing or modifying UI components in the project.
-----
+---
+
+-
 
 # UI Standards — shadcn/ui
 

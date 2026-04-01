@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState } from "react"
+import { Plus } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogTrigger,
@@ -11,37 +11,37 @@ import {
   DialogFooter,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { createLink } from "@/app/dashboard/actions";
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { createLink } from "@/app/dashboard/actions"
 
 export function CreateLinkDialog() {
-  const [open, setOpen] = useState(false);
-  const [url, setUrl] = useState("");
-  const [shortCode, setShortCode] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [pending, setPending] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [url, setUrl] = useState("")
+  const [shortCode, setShortCode] = useState("")
+  const [error, setError] = useState<string | null>(null)
+  const [pending, setPending] = useState(false)
 
   function handleOpenChange(next: boolean) {
-    setOpen(next);
+    setOpen(next)
     if (!next) {
-      setUrl("");
-      setShortCode("");
-      setError(null);
+      setUrl("")
+      setShortCode("")
+      setError(null)
     }
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setError(null);
-    setPending(true);
-    const result = await createLink({ url, shortCode: shortCode || undefined });
-    setPending(false);
+    e.preventDefault()
+    setError(null)
+    setPending(true)
+    const result = await createLink({ url, shortCode: shortCode || undefined })
+    setPending(false)
     if (result.success) {
-      handleOpenChange(false);
+      handleOpenChange(false)
     } else {
-      setError(result.error);
+      setError(result.error)
     }
   }
 
@@ -111,5 +111,5 @@ export function CreateLinkDialog() {
         </form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

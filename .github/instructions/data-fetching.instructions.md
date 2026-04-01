@@ -1,6 +1,7 @@
 ---
 description: This file describes the data fetching strategy for the project.
 ---
+
 # Data Fetching Guidelines
 
 This document outlines the best practices and guidelines for fetching data in our Next.js application. Adhering to these guidelines will ensure consistency, performance, and maintainability across the codebase.

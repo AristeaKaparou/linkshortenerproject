@@ -1,24 +1,34 @@
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import { getUserLinks } from "@/data/links";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Link2, ExternalLink } from "lucide-react";
-import { CreateLinkDialog } from "@/components/CreateLinkDialog";
-import { EditLinkDialog } from "@/components/EditLinkDialog";
-import { DeleteLinkDialog } from "@/components/DeleteLinkDialog";
+import { auth } from "@clerk/nextjs/server"
+import { redirect } from "next/navigation"
+import { getUserLinks } from "@/data/links"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card"
+import { Link2, ExternalLink } from "lucide-react"
+import { CreateLinkDialog } from "@/components/CreateLinkDialog"
+import { EditLinkDialog } from "@/components/EditLinkDialog"
+import { DeleteLinkDialog } from "@/components/DeleteLinkDialog"
 
 export default async function DashboardPage() {
-  const { userId } = await auth();
-  if (!userId) redirect("/");
+  const { userId } = await auth()
+  if (!userId) redirect("/")
 
-  const userLinks = await getUserLinks(userId);
+  const userLinks = await getUserLinks(userId)
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-10">
       <div className="mb-8 flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Your Links</h1>
-          <p className="mt-1 text-muted-foreground">Manage and track all your shortened URLs.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+            Your Links
+          </h1>
+          <p className="mt-1 text-muted-foreground">
+            Manage all your shortened URLs.
+          </p>
         </div>
         <CreateLinkDialog />
       </div>
@@ -30,7 +40,9 @@ export default async function DashboardPage() {
               <Link2 className="size-6 text-muted-foreground" />
             </div>
             <CardTitle className="text-lg">No links yet</CardTitle>
-            <CardDescription>Shorten your first URL to get started.</CardDescription>
+            <CardDescription>
+              Shorten your first URL to get started.
+            </CardDescription>
           </CardContent>
         </Card>
       ) : (
@@ -58,7 +70,9 @@ export default async function DashboardPage() {
                       <DeleteLinkDialog link={link} />
                     </div>
                   </div>
-                  <CardDescription className="truncate">{link.url}</CardDescription>
+                  <CardDescription className="truncate">
+                    {link.url}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p className="text-xs text-muted-foreground">
@@ -74,5 +88,5 @@ export default async function DashboardPage() {
         </ul>
       )}
     </main>
-  );
+  )
 }

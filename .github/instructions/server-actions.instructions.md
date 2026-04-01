@@ -16,27 +16,30 @@ description: Apply these instructions when creating or modifying server actions 
 
 - Server actions must **never throw errors**. Instead, always return a typed result object with either a `success` or `error` property.
 - Example return type:
+
 ```ts
 type ActionResult<T = void> =
   | { success: true; data?: T }
-  | { success: false; error: string };
+  | { success: false; error: string }
 ```
+
 - Callers should check the returned object rather than using try/catch.
 
 ## TypeScript
 
 - All data passed into server actions must have explicit TypeScript types.
-- Do **not** use the `FormData` TypeScript type. Define dedicated typed objects or interfaces instead. 
+- Do **not** use the `FormData` TypeScript type. Define dedicated typed objects or interfaces instead.
 
 Example:
+
 ```ts
 interface CreateLinkData {
-  title: string;
-  url: string;
+  title: string
+  url: string
 }
 
 export async function createLink(data: CreateLinkData) {
-  const { title, url } = data;
+  const { title, url } = data
   // ...
 }
 ```
@@ -44,37 +47,38 @@ export async function createLink(data: CreateLinkData) {
 ## Validation
 
 - Validate all incoming data using **Zod** before any further processing.
-- Reject and return an error early if validation fails. 
-Example:
+- Reject and return an error early if validation fails.
+  Example:
+
 ```ts
-import { z } from "zod";
+import { z } from "zod"
 const CreateLinkSchema = z.object({
   title: z.string().min(1),
   url: z.string().url(),
-});
+})
 export async function createLink(data: CreateLinkData): Promise<ActionResult> {
-  const parsedData = CreateLinkSchema.safeParse(data);
+  const parsedData = CreateLinkSchema.safeParse(data)
   if (!parsedData.success) {
-    return { success: false, error: "Invalid input data" };
+    return { success: false, error: "Invalid input data" }
   }
-  const { title, url } = parsedData.data;
+  const { title, url } = parsedData.data
   // ...
 }
 ```
-
 
 ## Authentication
 
 - Every server action must check for a logged-in user **before** performing any database operation.
 - Use Clerk's `auth()` helper to retrieve the current user. Return an error immediately if no user is found.
-Example:
+  Example:
+
 ```ts
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server"
 
 export async function createLink(data: CreateLinkData): Promise<ActionResult> {
-  const { userId } = await auth();
+  const { userId } = await auth()
   if (!userId) {
-    return { success: false, error: "User not authenticated" };
+    return { success: false, error: "User not authenticated" }
   }
   // ...
 }
@@ -85,12 +89,12 @@ export async function createLink(data: CreateLinkData): Promise<ActionResult> {
 - Do **not** use Drizzle queries directly inside server actions.
 - All database operations must go through **helper functions** located in the `/data` directory.
 - Server actions should import and call these helpers rather than constructing queries inline.
-Example:
-```ts 
-import { createLinkInDB } from "@/data/link";
+  Example:
+
+```ts
+import { createLinkInDB } from "@/data/link"
 export async function createLink(data: CreateLinkData) {
   // ...validation and auth checks
-  await createLinkInDB({ title, url, userId: user.id });
+  await createLinkInDB({ title, url, userId: user.id })
 }
 ```
-
