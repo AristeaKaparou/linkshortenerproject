@@ -137,7 +137,7 @@ export default async function Home() {
           <p className="text-lg text-muted-foreground mb-16">
             Get your first short link in under a minute.
           </p>
-          <div className="grid grid-cols-1 gap-12 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2">
             {(
               [
                 {
@@ -151,12 +151,6 @@ export default async function Home() {
                   title: "Paste your URL",
                   description:
                     "Paste any long URL into the dashboard and generate a short link instantly.",
-                },
-                {
-                  step: "3",
-                  title: "Share & Track",
-                  description:
-                    "Share your short link and watch the click analytics roll in.",
                 },
               ] as const
             ).map(({ step, title, description }) => (
