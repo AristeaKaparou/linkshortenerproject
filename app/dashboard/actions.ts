@@ -36,10 +36,14 @@ export async function createLink(data: CreateLinkData): Promise<ActionResult> {
     return { success: false, error: "URL is required" }
   }
 
+  let parsedUrl: URL
   try {
-    new URL(trimmedUrl)
+    parsedUrl = new URL(trimmedUrl)
   } catch {
     return { success: false, error: "Please enter a valid URL" }
+  }
+  if (parsedUrl.protocol !== "https:" && parsedUrl.protocol !== "http:") {
+    return { success: false, error: "Only http and https URLs are allowed" }
   }
 
   let shortCode: string
@@ -75,7 +79,12 @@ export async function createLink(data: CreateLinkData): Promise<ActionResult> {
     }
   }
 
-  await createLinkInDB({ url: trimmedUrl, shortCode: shortCode!, userId })
+  try {
+    await createLinkInDB({ url: trimmedUrl, shortCode: shortCode!, userId })
+  } catch (err) {
+    console.error("[createLink] DB error:", err)
+    return { success: false, error: "An unexpected error occurred. Please try again." }
+  }
   revalidatePath("/dashboard")
   return { success: true }
 }
@@ -97,10 +106,14 @@ export async function updateLink(data: UpdateLinkData): Promise<ActionResult> {
     return { success: false, error: "URL is required" }
   }
 
+  let parsedUrl: URL
   try {
-    new URL(trimmedUrl)
+    parsedUrl = new URL(trimmedUrl)
   } catch {
     return { success: false, error: "Please enter a valid URL" }
+  }
+  if (parsedUrl.protocol !== "https:" && parsedUrl.protocol !== "http:") {
+    return { success: false, error: "Only http and https URLs are allowed" }
   }
 
   const trimmedCode = data.shortCode.trim().toLowerCase()
@@ -114,10 +127,16 @@ export async function updateLink(data: UpdateLinkData): Promise<ActionResult> {
     }
   }
 
-  const updated = await updateLinkInDB(data.id, userId, {
-    url: trimmedUrl,
-    shortCode: trimmedCode,
-  })
+  let updated: Awaited<ReturnType<typeof updateLinkInDB>> | undefined
+  try {
+    updated = await updateLinkInDB(data.id, userId, {
+      url: trimmedUrl,
+      shortCode: trimmedCode,
+    })
+  } catch (err) {
+    console.error("[updateLink] DB error:", err)
+    return { success: false, error: "An unexpected error occurred. Please try again." }
+  }
 
   if (!updated) {
     return {
@@ -136,7 +155,12 @@ export async function deleteLink(id: number): Promise<ActionResult> {
     return { success: false, error: "User not authenticated" }
   }
 
-  await deleteLinkFromDB(id, userId)
+  try {
+    await deleteLinkFromDB(id, userId)
+  } catch (err) {
+    console.error("[deleteLink] DB error:", err)
+    return { success: false, error: "An unexpected error occurred. Please try again." }
+  }
   revalidatePath("/dashboard")
   return { success: true }
 }

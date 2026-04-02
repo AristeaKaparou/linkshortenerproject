@@ -13,5 +13,16 @@ export async function GET(_request: Request, { params }: RouteParams) {
     notFound()
   }
 
+  let parsedUrl: URL
+  try {
+    parsedUrl = new URL(link.url)
+  } catch {
+    notFound()
+  }
+
+  if (parsedUrl!.protocol !== "https:" && parsedUrl!.protocol !== "http:") {
+    notFound()
+  }
+
   redirect(link.url)
 }
